@@ -63,6 +63,7 @@ loanGroup.GET("/loans", nil)
 * [Technical] Can improve the code by using unitest
 * [Technical] Can improve overall flow by using CI/CD
 * [Technical] Can add API to GET the detail
+* [Technical] Can implement Auth for security
 * [Business] Can add flow to reject the loans
 * [Business] Can add detail of the loans tenure
 * [Business] Can add flow when borrower failed to pay the loan
