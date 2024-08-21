@@ -2,24 +2,48 @@
 
 ## Create Loans
 Flow when borrower propose the loans to system
-
-<img width="396" alt="gambar" src="https://github.com/user-attachments/assets/8c4e8096-cbf0-47e8-b9be-93453cd217aa">
+```mermaid
+sequenceDiagram
+    actor Borrower
+    Borrower->>LoanSystem: Propose Loan
+    LoanSystem->>DB: Save Proposed Loan
+```
 
 ## Approve Loan
 Flow when the staff approve the loan request
 
-<img width="374" alt="gambar" src="https://github.com/user-attachments/assets/1b0ee4fc-e488-4356-95a0-0f08f1a46450">
+```mermaid
+sequenceDiagram
+    actor Staff
+    Staff->>LoanSystem: Approve Loan Request
+    LoanSystem->>DB: Update Loan Status
+```
+
 
 ## Invest Loan
 Flow when the lender invest the amount of money into some loans.
 If the total investment already == principal, publish the loanID into some MQ and notification service will responsible to email the lender
+```mermaid
+sequenceDiagram
+    actor Lender
+    Lender->>LoanSystem: Invest
+    LoanSystem->>DB: Insert Investor
+    LoanSystem->>MQ: Publish if Invested
+    MQ->>NotificationSystem: 
+    NotificationSystem->>Lender: Send Email
 
-<img width="390" alt="gambar" src="https://github.com/user-attachments/assets/4c4f1146-8fde-4d4f-adc5-9690f28890b7">
+```
 
 ## Disburse Loan
 Change loan status into disburse when the money already disbursed to borrower
 
-<img width="388" alt="gambar" src="https://github.com/user-attachments/assets/9e7daad2-e74f-4eac-b515-255958b92a28">
+```mermaid
+sequenceDiagram
+    actor Staff
+    Staff->>LoanSystem: Update disbursment status
+    LoanSystem->>DB: Update State
+```
+
 
 # API List
 ```
