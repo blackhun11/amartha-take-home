@@ -13,7 +13,7 @@ type Config struct {
 }
 
 type App struct {
-	ProjectID  string `envconfig:"PROJECT_ID" default:"yabai-faceswap-api"`
+	ProjectID  string `envconfig:"PROJECT_ID" default:"amartha-loan-system"`
 	ServerPort string `envconfig:"SERVER_PORT" default:"1323"`
 }
 
