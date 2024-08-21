@@ -37,7 +37,7 @@ loanGroup.GET("/loans", nil)
 * [Technical] The code is still draft of API, so expected that the code still not working
 * [Technical] Can improve the API docs by providing swagger / openAPI
 * [Technical] Can improve the code by using unitest
-* [Technical] Can improve the code by using CI/CD
+* [Technical] Can improve overall flow by using CI/CD
 * [Technical] Can add API to GET the detail
 * [Business] Can add flow to reject the loans
 * [Business] Can add detail of the loans tenure
