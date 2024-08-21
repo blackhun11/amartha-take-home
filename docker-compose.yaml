@@ -1,0 +1,36 @@
+version: '3.5'
+
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:15.1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+      POSTGRES_DB: wme-dev-db
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "6432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  
+  pubsub:
+    image: thekevjames/gcloud-pubsub-emulator:472.0.0
+    platform: linux/amd64
+    hostname: pubsub
+    expose:
+      - 8681
+    ports:
+      - 8681:8681
+    environment:
+      - PUBSUB_PROJECT1=project1,amartha_loan_system:amartha_loan_system-subs
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+    postgres:

@@ -1,0 +1,11 @@
+BEGIN;
+
+CREATE TABLE loan_investments (
+    id SERIAL PRIMARY KEY,
+    loan_id INT REFERENCES loans(id) ON DELETE CASCADE,
+    investor_id TEXT NOT NULL,
+    amount DOUBLE PRECISION NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+COMMIT;
