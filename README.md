@@ -34,7 +34,7 @@ loanGroup.GET("/loans", nil)
 ```
 
 # Improvement
-* [Technical] The code is still draft of API, so expected that the code still not working
+* [Technical] The code is still draft of API
 * [Technical] Can improve the API docs by providing swagger / openAPI
 * [Technical] Can improve the code by using unitest
 * [Technical] Can improve overall flow by using CI/CD
