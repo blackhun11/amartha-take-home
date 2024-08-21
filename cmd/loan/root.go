@@ -13,8 +13,11 @@ import (
 	httpHandler "amartha-loan-system/internal/delivery/http"
 	"amartha-loan-system/internal/pg"
 	loanRepo "amartha-loan-system/internal/repository/loan"
+	pubsubrepo "amartha-loan-system/internal/repository/pubsub"
+
 	loanUsecase "amartha-loan-system/internal/usecase/loan"
 
+	"cloud.google.com/go/pubsub"
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -115,8 +118,14 @@ func (a application) init() application {
 	if err != nil {
 		panic(err)
 	}
+	pbclient, err := pubsub.NewClient(context.Background(), config.Instance().App.ProjectID)
+	if err != nil {
+		panic(err)
+	}
+	pubsubRepo := pubsubrepo.NewPubsubClient(pbclient)
+
 	loanRepo := loanRepo.NewPG(loanPG)
-	a.HTTPHandler = httpHandler.NewHTTPHandler(loanUsecase.NewloanUsecase(loanRepo))
+	a.HTTPHandler = httpHandler.NewHTTPHandler(loanUsecase.NewloanUsecase(loanRepo, pubsubRepo))
 	return a
 }
 

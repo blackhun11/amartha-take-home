@@ -3,7 +3,9 @@ package loan
 import (
 	"amartha-loan-system/internal/model"
 	"amartha-loan-system/internal/repository/loan"
+	"amartha-loan-system/internal/repository/pubsub"
 	"context"
+	"encoding/json"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -11,6 +13,7 @@ import (
 
 type loanUsecase struct {
 	loan.PG
+	pubsub.Pubsub
 }
 
 type LoanUsecase interface {
@@ -20,9 +23,10 @@ type LoanUsecase interface {
 	RecordDisburseLoan(ctx context.Context, loanDisbursement model.LoanDisbursement, loanID int64) (model.LoanDisbursement, error)
 }
 
-func NewloanUsecase(pg loan.PG) LoanUsecase {
+func NewloanUsecase(pg loan.PG, pubsub pubsub.Pubsub) LoanUsecase {
 	return &loanUsecase{
-		PG: pg,
+		PG:     pg,
+		Pubsub: pubsub,
 	}
 }
 
@@ -98,7 +102,11 @@ func (u *loanUsecase) RecordLoanInvestment(ctx context.Context, loanInvestment m
 		}
 
 		go func() {
+			b, _ := json.Marshal(map[string]any{
+				"loan_id": loanID,
+			})
 			// asumming this part was the processof sending an email containing link to agreement letter via MQ
+			_, _ = u.Pubsub.Publish(ctx, b, "investor_notification")
 		}()
 	}
 

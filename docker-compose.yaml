@@ -26,7 +26,7 @@ services:
     ports:
       - 8681:8681
     environment:
-      - PUBSUB_PROJECT1=project1,amartha_loan_system:amartha_loan_system-subs
+      - PUBSUB_PROJECT1=project1,investor_notification:investor_notification-subs
 
 networks:
   postgres:
